@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[搭建一个自己的博客]]></title>
+    <url>%2F2018%2F07%2F20%2F%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2%2F</url>
+    <content type="text"><![CDATA[相关网站Hexo安装 NexT安装 LeanCloud阅读量统计功能 来必力评论功能这个评论系统是韩国的，貌似要科学上网才能评论 阅读原文功能在文章中的合适位置使用&lt;!--more--&gt;添加阅读原文按钮 添加搜索功能1、安装 hexo-generator-searchdb 插件1$ npm install hexo-generator-searchdb --save 2、打开 站点配置文件 找到Extensions在下面添加12345search: path: search.xml field: post format: html limit: 10000 3、打开 主题配置文件 找到Local search，将enable设置为true]]></content>
+      <tags>
+        <tag>闲谈</tag>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[a blog]]></title>
+    <url>%2F2018%2F07%2F20%2Fa-blog%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2018%2F07%2F20%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
+</search>
