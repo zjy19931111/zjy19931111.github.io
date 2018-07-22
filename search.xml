@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[UnityShader入门精要（一）：Shader是什么]]></title>
+    <url>%2F2018%2F07%2F22%2FUnityShader%E5%85%A5%E9%97%A8%E7%B2%BE%E8%A6%81%EF%BC%88%E4%B8%80%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[Shader是什么Shader只是整个渲染流程的一个子部分。 程序员的三大浪漫编译原理、操作系统和计算机图形学]]></content>
+      <categories>
+        <category>Unity Shader</category>
+      </categories>
+      <tags>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[UnityShader入门精要（二）：渲染流水线]]></title>
+    <url>%2F2018%2F07%2F22%2FUnityShader%E5%85%A5%E9%97%A8%E7%B2%BE%E8%A6%81%EF%BC%88%E4%BA%8C%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[渲染流水线的3个概念阶段应用阶段（Application Stage）几何阶段（Geometry Stage)光栅化阶段（Rasterizer Stage）应用阶段：输出渲染所需的几何信息——渲染图元（rendering primitives），渲染图元包括点、线、三角面等几何阶段：对渲染图元进行处理，输出屏幕空间的二维顶点坐标光栅化阶段：输出屏幕上的像素，并渲染出最终的图像。光栅化的主要任务是决定哪些像素应该被渲染到屏幕上，需要对上一阶段得到的逐顶点数据（纹理坐标、顶点颜色等）进行插值，然后再进行逐像素处理 CPU和GPU之间的通信（1）把数据加载到显存中 网格、纹理等数据：硬盘（HDD）——&gt;系统内存（RAM）——&gt;显存（VRAM）（2）设置渲染状态 定义场景中的网格是怎样被渲染的，例如使用哪个顶点着色器/片元着色器、光源属性、材质等。（3）调用Draw Call CPU向GPU发送一个命令，这个命令指向一个需要被渲染的图元列表。GPU会根据渲染状态和顶点数据进行计算，最终输出成屏幕上的像素。 GPU流水线（几何阶段、光栅化阶段）几何阶段：顶点数据——&gt;顶点着色器——&gt;曲面细分着色器——&gt;几何着色器——&gt;裁剪——&gt;屏幕映射光栅化阶段：三角形设置——&gt;三角形遍历——&gt;片元着色器——&gt;逐片元操作——&gt;屏幕图像顶点着色器： 顶点的坐标变换 o.pos = mul(UNITY_MVP, v.position)\\将顶点坐标从模型空间转换到裁剪空间 由硬件做透视除法得到归一化的设备坐标（Normalized Device Coordinates，NDC） 计算和输出顶点的颜色（逐顶点光照） OpenGL(0,0)点在左下角，Dirext(0,0)点在左上角 三角形设置：计算光栅化一个三角网格所需的信息三角形遍历：检查每个像素是否被一个三角网格所覆盖片元着色器：DX中的像素着色器。片元着色器的输入是上一个阶段对顶点信息插值得到的结果，输出是一个或多个颜色值逐片元操作：DX中叫输出合并阶段。2个主要任务： 决定每个片元的可见性 如果一个片元通过了所有的测试，就需要把这个片元的颜色值和已经存储在颜色缓冲区中的颜色进行合并 OpenGL/DirectX是什么 图像应用编程接口，用于渲染二维或三维图形 我们的应用程序运行在CPU上，应用程序可以通过调用OpenGL或DirectX的图形接口将渲染所需的数据，如顶点数据、纹理数据、材质参数等数据存储在显存中的特定区域。 开发者可以通过图像编程接口发出渲染命令——Draw Call，它们会被显卡驱动翻译成GPU能够理解的代码，进行真正的绘制HLSL、GLSL、CG是什么| Shader语言 | 厂商 | 编译工作 || ————- |:————-:| —–:|| HLSL | 微软DirectX | 微软平台编译器 || GLSL | SGI | 跨平台显卡驱动编译 || CG | NVDIA | 跨平台 什么是Draw CallCPU调用图像编程接口，如OpenGL中的glDrawElements命令或者DirectX中的DrawIndexedPrimitive命令，以命令GPU进行渲染操作。 CPU和GPU是如何实现并行工作的？ 命令缓冲区 为什么Draw Call多了会影响帧率？ 在每次调用Draw Call之前，CPU需要向GPU发送很多内容，包括数据、状态和命令等。在这一阶段CPU需要完成很多工作，例如检查渲染状态等。只有完成了这些准备工作，GPU才可以开始本次的渲染。如果Draw Call的数量太多，CPU就会把大量时间花费在提交Draw Call上。GPU的渲染速度往往快于CPU提交命令的速度。 如何减少Draw Call？ 利用批处理，CPU在RAM中把多个网格合并成一个更大的网格，再发送给GPU，然后在一个Draw Call中渲染它们。需要注意的是，使用批处理合并的网格将会使用同一种渲染状态。 避免使用大量很小的网格 2.避免使用过多的材质 Shader是什么 GPU流水线上的一些可高度编程阶段，由Shader编译出来的最终代码会在GPU上运行 一些特定类型的着色器，顶点着色器、片元着色器 依靠Shader我们可以控制流水线中的渲染细节，例如顶点着色器用来进行顶点变换以及传递数据，片元着色器用来进行逐像素的渲染]]></content>
+      <categories>
+        <category>Unity Shader</category>
+      </categories>
+      <tags>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[搭建一个自己的博客]]></title>
     <url>%2F2018%2F07%2F20%2F%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2%2F</url>
     <content type="text"><![CDATA[相关网站Hexo安装 NexT安装 LeanCloud阅读量统计功能 来必力评论功能这个评论系统是韩国的，貌似要科学上网才能评论 阅读原文功能在文章中的合适位置使用&lt;!--more--&gt;添加阅读原文按钮 添加搜索功能1、安装 hexo-generator-searchdb 插件1$ npm install hexo-generator-searchdb --save 2、打开 站点配置文件 找到Extensions在下面添加12345search: path: search.xml field: post format: html limit: 10000 3、打开 主题配置文件 找到Local search，将enable设置为true]]></content>
